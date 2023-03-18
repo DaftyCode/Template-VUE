@@ -1,0 +1,159 @@
+<template>
+  <!-- <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo-head.png" width="125" height="125" />
+
+    <div class="menu-icon" @click="toggleMenu()">
+      <div class="line first"></div>
+      <div class="line middle"></div>
+      <div class="line last"></div>
+    </div>
+
+    <div class="wrapper">
+      <NavbarComponent></NavbarComponent>
+    </div>
+  </header> -->
+  <div>
+    <Menubar :model="items">
+      <template #start>
+        <div class="menu-icon" v-if="!isOpened" @click="toggleMenu()">
+          <i class="pi pi-bars" style="font-size: 2rem"></i>
+        </div>
+        <img alt="logo" src="@/assets/logo-head.png" height="40" class="mr-2" />
+      </template>
+      <template #end>
+        <InputText placeholder="Search" type="text" v-model="searchWord" @keyup.enter="searchByWord()" />
+      </template>
+    </Menubar>
+  </div>
+</template>
+
+<script>
+  import { ref } from 'vue';
+  import useSidenavComposable from '@/composables/useSidenavComposable';
+  import useNewsApiComposable from '@/composables/useNewsApiComposable';
+  import Menubar from 'primevue/menubar';
+  import InputText from 'primevue/inputtext';
+  import { MENU_ITEMS } from './constants/menuItems';
+  /* import NavbarComponent from '../navbar-component/NavbarComponent.vue'; */
+
+  export default {
+    name: 'header-component',
+    props: {},
+    components: {
+      Menubar,
+      InputText,
+      /* NavbarComponent, */
+    },
+
+    setup() {
+      const { isOpened, toggleMenu } = useSidenavComposable();
+      const { fetchSearchNews, fetchTopNews } = useNewsApiComposable();
+
+      const items = ref(MENU_ITEMS);
+      const searchWord = ref('');
+
+      const searchByWord = () => {
+        fetchSearchNews(true);
+      };
+
+      return {
+        toggleMenu,
+        items,
+        isOpened,
+        searchWord,
+        searchByWord,
+        fetchTopNews,
+      };
+    },
+  };
+</script>
+
+<style lang="scss" scoped>
+  header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .logo {
+    max-height: 40px;
+    width: auto;
+    padding: 10px 10px 0px 10px;
+  }
+
+  .menu-icon {
+    display: none;
+  }
+
+  @media (max-width: 1199px) {
+    .menu-icon {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin-top: 8px;
+      margin-right: 10px;
+
+      &:hover {
+        color: red;
+      }
+    }
+  }
+
+  /* .menu-icon {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .line {
+      height: 3px;
+      width: 100%;
+      background: var(--secondary);
+      margin-bottom: 4px;
+      border-radius: 2px;
+      position: relative;
+      top: 0;
+      transition: all 0.5s;
+    }
+
+    &:hover {
+      .line {
+        background: var(--secondary-light);
+        box-shadow: 0px 0px 8px 0px rgb(0 0 0 / 100%);
+      }
+    }
+
+    &.open {
+      display: block;
+
+      .middle {
+        width: 0px;
+      }
+
+      .first {
+        transform: rotate(45deg);
+        top: 6.5px;
+        width: 85%;
+      }
+
+      .last {
+        transform: rotate(-45deg);
+        top: -7px;
+        width: 85%;
+      }
+    }
+  } */
+</style>

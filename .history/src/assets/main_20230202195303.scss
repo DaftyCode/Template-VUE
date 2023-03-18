@@ -1,0 +1,70 @@
+@import './variables.css';
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #80a248, #198b4d);
+}
+
+#app {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  color: #333;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.list-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin: 15px 20px 20px 20px;
+}
+
+@media (max-width: 1199px) {
+  .list-container {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .list-container {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+      margin: 15px;
+  }
+}
+
+@media (max-width: 599px) {
+  .list-container {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 15px;
+      margin: 15px;
+  }
+}
+
+/* PRIMEVUE */
+
+.p-menubar {
+  border-radius: 0px;
+  border: none;
+  border-bottom: 1px solid #bbb7b7;
+  height: 60px;
+}
+
+.p-menubar-start {
+  display: inline-flex;
+}
